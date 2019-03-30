@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="training4-american-ws-test-suite.xml" />
+	<munit:test name="training4-american-ws-test-suite-getFlightsTest" description="Test" doc:id="df3a4b0f-b08b-4f0f-8735-9b76ad3f8772" >
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="221f3450-de9c-43bf-aa1f-2051fdf7e4df" />
+			<flow-ref doc:name="Flow-ref to getFlights" doc:id="57c498f9-e1a5-46aa-bbb7-030b6d271910" name="getFlights"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="b013c26b-5bce-4b10-bb17-6b9a3ed87c3b" expression="#[payload]" is='#[MunitTools::notNullValue()]' message="The staus is not null"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="training4-american-ws-test-suite-getFlightsByIDTest" description="Test" doc:id="cec3d76e-04d0-4df5-963b-6532c63a4b91" >
+		<munit:enable-flow-sources >
+			<munit:enable-flow-source value="getFlightsByID" />
+		</munit:enable-flow-sources>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="14d00f5f-a261-4b07-a587-4be85d965a5d" >
+				<munit:variables >
+					<munit:variable key="ID" value="5" />
+				</munit:variables>
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to getFlightsByID" doc:id="b16065e0-c58e-449b-b443-3231c5694434" name="getFlightsByID"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="493fa5b7-a141-4cd0-a952-54f0e2a94ae4" expression="#[payload]" message="The status is not Null" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="training4-american-ws-test-suite-postFlightsTest" description="Test" doc:id="ca072cc1-d0d1-498d-abd7-bf830520f7b2" >
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to postFlights" doc:id="7fc200b1-52cf-4b77-a6ec-dc949d8e6393" name="postFlights"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="3f4ec9c7-817b-4c15-932e-15f53d2618d2" expression="#[payload]" is='#[MunitTools::equalTo("{\"message\": \"Flight added (but not really)\"}")]' message="Payload does  match against expected transformation"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

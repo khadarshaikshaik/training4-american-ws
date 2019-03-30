@@ -1,0 +1,35 @@
+{
+  "configs": [
+    "training4-american-ws.xml",
+    "training4-american-ws-test-suite.xml"
+  ],
+  "secureProperties": [],
+  "redeploymentEnabled": true,
+  "name": "com.mycompany:training4-american-ws:1.0.0-SNAPSHOT",
+  "minMuleVersion": "4.1.4",
+  "requiredProduct": "MULE_EE",
+  "classLoaderModelLoaderDescriptor": {
+    "id": "mule",
+    "attributes": {
+      "exportedResources": [
+        "api/american-flights-api.raml",
+        "api/examples/AmericanFlightExample.raml",
+        "api/examples/AmericanFlightNoIDExample.raml",
+        "api/exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flight-data-type/1.0.1/AmericanFlightDataType.raml",
+        "api/exchange_modules/68ef9520-24e9-4cf2-b2f5-620025690913/training-american-flights-example/1.0.1/AmericanFlightsExample.raml",
+        "application-types.xml",
+        "examples/american-flights-example.json",
+        "log4j2.xml",
+        "log4j2-test.xml",
+        "sample_data/design-info.json",
+        "sample_data/list_object.dwl"
+      ],
+      "includeTestDependencies": "true",
+      "exportedPackages": []
+    }
+  },
+  "bundleDescriptorLoader": {
+    "id": "mule",
+    "attributes": {}
+  }
+}

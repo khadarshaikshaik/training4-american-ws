@@ -12,10 +12,11 @@
     <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-		<app.runtime>4.1.4</app.runtime>
+		<mule.version>4.1.4</mule.version>
+		<!--<app.runtime>4.1.4</app.runtime>-->
 		<mule.maven.plugin.version>3.1.6</mule.maven.plugin.version>
-	<munit.version>2.1.4</munit.version>
+		<munit.version>2.1.4</munit.version>
+		<mule.tools.version>1.1</mule.tools.version>
     </properties>
 
 	<build>
@@ -32,8 +33,37 @@
                             <artifactId>mysql-connector-java</artifactId>
                         </sharedLibrary>
                     </sharedLibraries>
-                </configuration>
-			</plugin>
+       <!-- <configuration>
+             <deploymentType>standalone</deploymentType>
+             <muleVersion>${mule.version}</muleVersion>
+         </configuration> -->
+              <deploymentType>cloudhub</deploymentType>
+             <muleVersion>4.1.4</muleVersion>
+             <username>khadarbashashaik2</username>
+             <password>Sameeha@19</password>
+              <applicationName>training4-american-ws-khadar</applicationName>
+              <!-- <businessGroup>engineering\devops</businessGroup> -->
+             <target>CloudHub</target>
+             <!-- One of: server, serverGroup, cluster
+             <domain>${cloudhub.domain}</domain>-->
+             <targetType>server</targetType>
+             <environment>Sandbox</environment>
+             <properties>
+                 <env>${env}</env>
+             </properties>
+             <workerType>Micro</workerType>
+             <workers>1</workers>
+         </configuration>
+         <executions>
+             <execution>
+                 <id>deploy</id>
+                 <phase>deploy</phase>
+                 <goals>
+                     <goal>deploy</goal>
+                 </goals>
+             </execution>             
+         </executions>                
+		</plugin>
 		<plugin>
                 <groupId>com.mulesoft.munit.tools</groupId>
                 <artifactId>munit-maven-plugin</artifactId>
@@ -57,6 +87,61 @@
                     </coverage>
                 </configuration>
             </plugin>
+			<plugin>
+                <groupId>org.mule.tools.maven</groupId>
+                <artifactId>mule-app-maven-plugin</artifactId>
+                <version>${mule.tools.version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2.1</version>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>project</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>add-resource</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>add-resource</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>src/main/app/</directory>
+								</resource>
+								<resource>
+									<directory>mappings/</directory>
+								</resource>
+							<resource>
+                                    <directory>src/main/api/</directory>
+                                </resource>
+                            </resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		 	<plugin>
+   				 <groupId>org.apache.maven.plugins</groupId>
+    			 <artifactId>maven-install-plugin</artifactId>
+    			 <version>2.5.2</version>
+			</plugin>
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-deploy-plugin</artifactId>
+			    <version>2.8.2</version>
+				<configuration>
+				    <skip>true</skip>
+				</configuration> 
+			</plugin>            
         </plugins>
 	</build>
 
@@ -160,7 +245,7 @@
     </dependencies>
 
 	<repositories>
-          <repository>
+         <!--  <repository>
             <id>anypoint-exchange</id>
             <name>Anypoint Exchange</name>
             <url>https://maven.anypoint.mulesoft.com/api/v1/maven</url>
@@ -171,7 +256,19 @@
             <name>MuleSoft Releases Repository</name>
             <url>https://repository.mulesoft.org/releases/</url>
             <layout>default</layout>
+        </repository>-->
+          <repository>
+            <id>Central</id>
+            <name>Central</name>
+            <url>http://repo1.maven.org/maven2/</url>
+            <layout>default</layout>
         </repository>
+        <repository>
+            <id>mulesoft-releases</id>
+            <name>MuleSoft Releases Repository</name>
+            <url>http://repository.mulesoft.org/releases/</url>
+            <layout>default</layout>
+        </repository>        
     </repositories>
     <pluginRepositories>
         <pluginRepository>
